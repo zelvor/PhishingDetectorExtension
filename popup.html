@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Phishing Detector</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Josefin+Sans|Russo+One"
+      rel="stylesheet"
+    />
+    <link href="css/plugin_ui.css" type="text/css" rel="stylesheet" />
+    <script src="js/popup.js"></script>
+  </head>
+  <body style="width: 330px; height: 350px;">
+    <div id="plugin_name">
+      <h1>Phishing Detector</h1>
+    </div>
+    <div class="content">
+      <div id="page-1">
+        <div id="domain-name" class="text-center"></div>
+        <div class="rounded-circle" id="res-circle">
+          <h1 id="site_score">Loading</h1>
+        </div>
+        <h2 id="site_msg">Đang phân tích...</h2>
+        <ul id="features"></ul>
+      </div>
+
+    <div id="page-2" class="text-center px-2" style="display: none;">
+      <div>Nhập URL bạn muốn kiểm tra vào đây</div>
+      <div class="my-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nhập URL"
+          aria-label="Nhập URL"
+          aria-describedby="button-addon2"
+          id="url_input"  
+        />
+        <button
+          class="btn btn-outline-secondary my-2"
+          type="button"
+          id="button-addon2"
+        >
+          Kiểm tra
+        </button>
+
+        <div id="subpage-2" style="display: none">
+          <div id="domain-name-2" class="text-center"></div>
+          <div class="rounded-circle" id="res-circle-2">
+            <h1 id="site_score_2">Loading</h1>
+          </div>
+          <h2 id="site_msg_2">Đang phân tích...</h2>
+          <ul id="features"></ul>
+        </div>
+
+
+    </div>
+
+    </div>
+
+    <footer>
+      <div class="d-flex gap-2 justify-content-center">
+        <button type="button" class="btn btn-primary" id="btn1">
+          1
+        </button>
+        <button type="button" class="btn btn-primary" id="btn2">
+          2
+        </button>
+        <button type="button" class="btn btn-primary" id="btn3">
+          3
+        </button>
+      </div>
+    </footer>
+    
+    <!-- <script src="js/score.js"></script> -->
+    <script src="js/navigation.js"></script>
+    <script src="js/eventPage.js"></script>
+    <script src="js/buttonAction.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

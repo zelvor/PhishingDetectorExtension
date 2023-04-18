@@ -1,0 +1,30 @@
+{
+    "name": "Phishing Detector",
+    "version": "1.0",
+    "description": "Phát hiện URL giả mạo",
+    "action":{
+      "default_popup": "popup.html"
+    },
+    "icons": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "content_scripts":[
+        {
+          "matches": ["http://*/*","https://*/*"],
+          "css": ["css/style.css"],
+          "js": ["js/main.js"]
+        }
+      ],
+      "manifest_version": 3,
+      "permissions": [
+        "tabs",
+        "contextMenus",
+        "storage",
+        "activeTab",
+        "scripting"      ],
+      "background": {
+        "service_worker": "js/background.js"
+      }
+  }
