@@ -23,7 +23,8 @@
         "contextMenus",
         "storage",
         "activeTab",
-        "scripting"      ],
+        "scripting"
+      ],
       "background": {
         "service_worker": "js/background.js"
       }
