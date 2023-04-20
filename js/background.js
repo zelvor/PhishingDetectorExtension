@@ -14,8 +14,16 @@ function postAIResponse(urlInput, callback) {
 }
 
 let activeTab = null
+let runningDomain = null
 
 function updateBadge(url) {
+  if (url.match(/^(http|https):\/\/[^ "]+$/)) {
+  const domain = new URL(url).hostname
+    if (domain === runningDomain) {
+      return
+    }
+    runningDomain = domain
+  }
   chrome.action.setBadgeText({ text: '...' })
   chrome.action.setBadgeBackgroundColor({ color: '#5bc0de' })
   chrome.storage.sync.set({ response: '' }, function () {})
@@ -27,8 +35,7 @@ function updateBadge(url) {
         color: response === 'Phish' ? '#bc5858' : '#5cb85c',
       })
       // chrome.runtime.sendMessage({ message: response })
-      chrome.storage.sync.set({ response: response }, function () {})
-      
+      chrome.storage.sync.set({ response: response }, function () {}) 
     })
   }
 }
