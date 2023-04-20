@@ -8,9 +8,13 @@
 //   }
 // })
 
-// get local storage
+// get url of current tab
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  var url = tabs[0].url
+  document.getElementById('domain-name').innerHTML = new URL(url).hostname
+})
+
 chrome.storage.sync.get('response', function (result) {
-  console.log(result.response)
   if (result.response == 'Phish') {
     showPhish()
   } else if (result.response == 'Legit') {
@@ -28,8 +32,12 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   }
 })
 
+const circle = document.getElementById('res-circle');
 
 function showLegit() {
+  
+  circle.style.backgroundColor = '#5cb85c'
+  circle.classList.remove('spinner-border')
   document.getElementById('res-circle').style.backgroundColor = '#5cb85c'
   document.getElementById('site_score').innerHTML = 'Legit'
   document.getElementById('site_msg').innerHTML =

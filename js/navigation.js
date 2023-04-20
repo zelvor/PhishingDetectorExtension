@@ -9,11 +9,16 @@ btn1.addEventListener('click', () => {
   page1.style.display = 'block'
   page2.style.display = 'none'
   subpage2.style.display = 'none'
+  btn1.classList.add('active')
+  btn2.classList.remove('active')
 })
 
 btn2.addEventListener('click', () => {
   page1.style.display = 'none'
   page2.style.display = 'block'
+  subpage2.style.display = 'none'
+  btn1.classList.remove('active')
+  btn2.classList.add('active')
 })
 
 submitBtn.addEventListener('click', () => {
