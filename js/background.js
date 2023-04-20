@@ -13,6 +13,8 @@ function postAIResponse(urlInput, callback) {
     })
 }
 
+let activeTab = null
+
 function updateBadge(url) {
   chrome.action.setBadgeText({ text: '...' })
   chrome.action.setBadgeBackgroundColor({ color: '#5bc0de' })
@@ -32,6 +34,7 @@ function updateBadge(url) {
 }
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
+  activeTab = activeInfo.tabId
   chrome.tabs.get(activeInfo.tabId, function (tab) {
     console.log('OnActivated: ' + tab.url)
     updateBadge(tab.url)
@@ -39,7 +42,7 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
 })
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if (changeInfo.url) {
+  if (changeInfo.url && tabId === activeTab) {
     console.log('OnUpdated: ' + changeInfo.url)
     updateBadge(tab.url)
   }
