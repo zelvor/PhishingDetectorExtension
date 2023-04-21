@@ -41,12 +41,14 @@ function showLegit() {
   document.getElementById('res-circle').style.backgroundColor = '#5cb85c'
   document.getElementById('site_score').innerHTML = 'Legit'
   document.getElementById('site_msg').innerHTML =
-    'This website is safe to visit'
+    'Trang web này an toàn'
 }
 
 function showPhish() {
+  circle.style.backgroundColor = '#bc5858'
+  circle.classList.remove('spinner-border')
   document.getElementById('res-circle').style.backgroundColor = '#bc5858'
   document.getElementById('site_score').innerHTML = 'Phish'
   document.getElementById('site_msg').innerHTML =
-    'This website is a phishing site'
+    'Trang web này không an toàn'
 }

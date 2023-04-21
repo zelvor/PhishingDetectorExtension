@@ -15,7 +15,7 @@ html {
 
   #domain-name {
     font-size: 28px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
   }
   
   #plugin_name {
@@ -65,7 +65,7 @@ html {
     font-size: 18px;
     color: #666;
     text-align: center;
-    margin: 10px 0;
+    margin: 20px 0;
   }
   
   /* ul {
