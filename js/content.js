@@ -35,7 +35,6 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 const circle = document.getElementById('res-circle');
 
 function showLegit() {
-  
   circle.style.backgroundColor = '#5cb85c'
   circle.classList.remove('spinner-border')
   document.getElementById('res-circle').style.backgroundColor = '#5cb85c'
