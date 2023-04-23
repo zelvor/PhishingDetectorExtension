@@ -1,0 +1,11 @@
+.main {
+    display: flex;
+  }
+  
+  .sidebar {
+    flex: 0 0 300px; /* giữ cố định chiều rộng */
+  }
+  
+  .inner {
+    flex-grow: 1; /* chiếm phần còn lại */
+  }
