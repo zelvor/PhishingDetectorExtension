@@ -13,8 +13,11 @@ btn1.addEventListener('click', () => {
   page3.style.display = 'none'
   subpage2.style.display = 'none'
   btn1.classList.add('active')
+  btn1.classList.remove('text-secondary')
   btn2.classList.remove('active')
+  btn2.classList.add('text-secondary')
   btn3.classList.remove('active')
+  btn3.classList.add('text-secondary')
 })
 
 btn2.addEventListener('click', () => {
@@ -23,8 +26,11 @@ btn2.addEventListener('click', () => {
   page3.style.display = 'none'
   subpage2.style.display = 'none'
   btn1.classList.remove('active')
+  btn1.classList.add('text-secondary')
   btn2.classList.add('active')
+  btn2.classList.remove('text-secondary')
   btn3.classList.remove('active')
+  btn3.classList.add('text-secondary')
 })
 
 btn3.addEventListener('click', () => {
@@ -33,8 +39,11 @@ btn3.addEventListener('click', () => {
   page3.style.display = 'block'
   subpage2.style.display = 'none'
   btn1.classList.remove('active')
+  btn1.classList.add('text-secondary')
   btn2.classList.remove('active')
+  btn2.classList.add('text-secondary')
   btn3.classList.add('active')
+  btn3.classList.remove('text-secondary')
 })
 
 submitBtn.addEventListener('click', () => {
