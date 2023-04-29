@@ -18,7 +18,7 @@ let runningDomain = null
 
 function updateBadge(url) {
   if (url.match(/^(http|https):\/\/[^ "]+$/)) {
-  const domain = new URL(url).hostname
+    const domain = new URL(url).hostname
     if (domain === runningDomain) {
       return
     }

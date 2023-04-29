@@ -2,12 +2,19 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   console.log(changes.response.newValue)
   if (changes.response.newValue == 'Phish') {
     showPopup()
+  } else if (changes.response.newValue == 'Legit') {
+    removePopup()
   }
 })
 
+function removePopup() {
+  document.getElementById('my-popup-phishing-detector').remove()
+  document.getElementById('my-overlay-phishing-detector').remove()
+}
+
 function showPopup() {
   var popup = document.createElement('div')
-  popup.id = 'my-popup'
+  popup.id = 'my-popup-phishing-detector'
 
   // Set the styles for the popup
   popup.style.position = 'fixed'
@@ -58,6 +65,7 @@ function showPopup() {
 
   // Create the overlay element
   var overlay = document.createElement('div')
+  overlay.id = 'my-overlay-phishing-detector'
   overlay.style.position = 'fixed'
   overlay.style.top = '0'
   overlay.style.left = '0'
