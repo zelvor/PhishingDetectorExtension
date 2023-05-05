@@ -42,3 +42,53 @@ function postAIResponse(urlInput) {
       }
     })
 }
+
+const button2 = document.getElementById('button-addon3')
+button2.addEventListener('click', function () {
+  var urlInput = document.getElementById('url_input_3').value
+  console.log(urlInput)
+  ReportHandler(urlInput)
+})
+
+function ReportHandler(urlInput) {
+  if (urlInput == '') {
+    alert('Please enter the URL')
+    return
+  }
+  var regex = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ) // fragment locator
+  if (!regex.test(urlInput)) {
+    alert('Please enter the valid URL')
+    return
+  }
+
+  // send url report to report_url.txt on Azure Blob Storage
+  var myHeaders = new Headers()
+  myHeaders.append('Content-Type', 'text/plain')
+
+  var raw = ''
+
+  var requestOptions = {
+    method: 'POST',
+    body: raw,
+    redirect: 'follow',
+  }
+
+  fetch('https://phishingdetector.azurewebsites.net/postreporturl?url=' + urlInput, requestOptions)
+    .then((response) => response.text())
+    .then((result) => (document.getElementById('report_msg').innerHTML = "Báo cáo thành công!"))
+    .catch((error) => console.log('error', error))
+
+  setTimeout(function () {
+    document.getElementById('report_msg').innerHTML = ''
+  }, 3000)
+}
+
+
