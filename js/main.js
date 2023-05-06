@@ -1,15 +1,57 @@
-chrome.storage.onChanged.addListener((changes, areaName) => {
-  console.log(changes.response.newValue)
-  if (changes.response.newValue == 'Phish') {
-    showPopup()
-  } else if (changes.response.newValue == 'Legit') {
-    removePopup()
+// chrome.tabs.onActivated.addListener(function (activeInfo) {
+//   activeTab = activeInfo.tabId
+//   url = activeInfo.url
+//   console.log(url)
+//   removePopup()
+//   findURLInStorage(url)
+// })
+
+// chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+//   if (changeInfo.url && tabId === activeTab) {
+//     url = changeInfo.url
+//     removePopup()
+//     findURLInStorage(url)
+//   }
+// })
+
+// Phát hiện sự kiện thay đổi tab
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible') {
+    const url = window.location.href
+    findURLInStorage(url)
   }
 })
 
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+  if (areaName === "sync" && "results" in changes) {
+    console.log("Storage changed")
+    const url = window.location.href
+    findURLInStorage(url)
+  }
+});
+
+function findURLInStorage(url) {
+  chrome.storage.sync.get(['results'], function (result) {
+    console.log(result)
+    removePopup()
+    const matchingURL = result.results.find((element) => element.url === url)
+    if (matchingURL) {
+      if (matchingURL.response === 'Phish') {
+        showPopup()
+      }
+    }
+  })
+}
+
 function removePopup() {
-  document.getElementById('my-popup-phishing-detector').remove()
-  document.getElementById('my-overlay-phishing-detector').remove()
+  // check if popup exists
+  if (document.getElementById('my-popup-phishing-detector')) {
+    document.getElementById('my-popup-phishing-detector').remove()
+  }
+
+  if (document.getElementById('my-overlay-phishing-detector')) {
+    document.getElementById('my-overlay-phishing-detector').remove()
+  }
 }
 
 function showPopup() {
