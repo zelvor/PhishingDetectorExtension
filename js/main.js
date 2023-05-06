@@ -22,21 +22,26 @@ document.addEventListener('visibilitychange', function () {
   }
 })
 
-chrome.storage.onChanged.addListener(function(changes, areaName) {
-  if (areaName === "sync" && "results" in changes) {
-    console.log("Storage changed")
-    const url = window.location.href
-    findURLInStorage(url)
-  }
-});
+// kiểm tra lại url sau khi reload xong
+window.onload = function () {
+  const url = window.location.href
+  findURLInStorage(url)
+}
+
+// khi storage thay đổi
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  // find the url in the storage
+  const url = window.location.href
+  findURLInStorage(url)
+})
 
 function findURLInStorage(url) {
   chrome.storage.sync.get(['results'], function (result) {
-    console.log(result)
-    removePopup()
     const matchingURL = result.results.find((element) => element.url === url)
     if (matchingURL) {
       if (matchingURL.response === 'Phish') {
+        console.log('Phishing detected')
+        removePopup()
         showPopup()
       }
     }

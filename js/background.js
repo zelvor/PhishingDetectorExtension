@@ -1,5 +1,5 @@
-let results = [];
-let runningDomain = ''
+let results = []
+// let runningDomain = ''
 let activeTab = 0
 
 function postAIResponse(urlInput, callback) {
@@ -18,46 +18,39 @@ function postAIResponse(urlInput, callback) {
 }
 
 function updateBadge(url) {
-  if (url.match(/^(http|https):\/\/[^ "]+$/)) {
-    const domain = new URL(url).hostname
-    if (domain === runningDomain) {
-      return
-    }
-    runningDomain = domain
-  }
-  else {
-    return
-  }
-
   chrome.action.setBadgeText({ text: '...' })
   chrome.action.setBadgeBackgroundColor({ color: '#5bc0de' })
-
-  chrome.storage.sync.get('results', function(data) {
-    let found = false;
-    if (data.results) {
-      for (let i = 0; i < data.results.length; i++) {
-        if (data.results[i].url === url) {
-          chrome.action.setBadgeText({ text: data.results[i].response })
-          chrome.action.setBadgeBackgroundColor({
-            color: data.results[i].response === 'Phish' ? '#bc5858' : '#5cb85c',
-          })
-          found = true;
-          break;
+  if (url.match(/^(http|https):\/\/[^ "]+$/)) {
+    chrome.storage.sync.get('results', function (data) {
+      let found = false
+      if (data.results) {
+        for (let i = 0; i < data.results.length; i++) {
+          if (data.results[i].url === url) {
+            chrome.action.setBadgeText({ text: data.results[i].response })
+            chrome.action.setBadgeBackgroundColor({
+              color:
+                data.results[i].response === 'Phish' ? '#bc5858' : '#5cb85c',
+            })
+            found = true
+            break
+          }
         }
       }
-    }
-    if (!found) {
-      postAIResponse(url, function (response) {
-        chrome.action.setBadgeText({ text: response })
-        chrome.action.setBadgeBackgroundColor({
-          color: response === 'Phish' ? '#bc5858' : '#5cb85c',
+      if (!found) {
+        postAIResponse(url, function (response) {
+          chrome.action.setBadgeText({ text: response })
+          chrome.action.setBadgeBackgroundColor({
+            color: response === 'Phish' ? '#bc5858' : '#5cb85c',
+          })
+          const result = { url: url, response: response }
+          results.push(result)
+          chrome.storage.sync.set({ results: results }, function () {})
         })
-        const result = { url: url, response: response };
-        results.push(result);
-        chrome.storage.sync.set({ results: results }, function () {}) 
-      })
-    }
-  });
+      }
+    })
+  } else {
+    return
+  }
 }
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
