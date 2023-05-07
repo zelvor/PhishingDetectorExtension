@@ -36,7 +36,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 })
 
 function findURLInStorage(url) {
-  chrome.storage.sync.get(['results'], function (result) {
+  chrome.storage.local.get(['results'], function (result) {
     const matchingURL = result.results.find((element) => element.url === url)
     if (matchingURL) {
       if (matchingURL.response === 'Phish') {

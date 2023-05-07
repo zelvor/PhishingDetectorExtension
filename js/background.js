@@ -1,6 +1,6 @@
 let results = []
-// let runningDomain = ''
-let activeTab = 0
+const MAX_URLS = 1000
+const MAX_DAYS = 5
 
 function postAIResponse(urlInput, callback) {
   fetch(
@@ -20,8 +20,9 @@ function postAIResponse(urlInput, callback) {
 function updateBadge(url) {
   chrome.action.setBadgeText({ text: '...' })
   chrome.action.setBadgeBackgroundColor({ color: '#5bc0de' })
+
   if (url.match(/^(http|https):\/\/[^ "]+$/)) {
-    chrome.storage.sync.get('results', function (data) {
+    chrome.storage.local.get('results', function (data) {
       let found = false
       if (data.results) {
         for (let i = 0; i < data.results.length; i++) {
@@ -36,6 +37,7 @@ function updateBadge(url) {
           }
         }
       }
+
       if (!found) {
         postAIResponse(url, function (response) {
           chrome.action.setBadgeText({ text: response })
@@ -44,7 +46,12 @@ function updateBadge(url) {
           })
           const result = { url: url, response: response }
           results.push(result)
-          chrome.storage.sync.set({ results: results }, function () {})
+
+          if (results.length > MAX_URLS) {
+            results.shift() // remove the oldest URL
+          }
+
+          chrome.storage.local.set({ results: results }, function () {})
         })
       }
     })
@@ -52,6 +59,23 @@ function updateBadge(url) {
     return
   }
 }
+
+function cleanupExpiredData() {
+  chrome.storage.local.get('results', function (data) {
+    if (data.results) {
+      const now = Date.now()
+      const maxAge = MAX_DAYS * 24 * 60 * 60 * 1000 // convert days to milliseconds
+      const validResults = data.results.filter(
+        (result) => now - result.timestamp <= maxAge,
+      )
+
+      chrome.storage.local.set({ results: validResults }, function () {})
+    }
+  })
+}
+
+// Clean up expired data once a day
+setInterval(cleanupExpiredData, 24 * 60 * 60 * 1000)
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
   activeTab = activeInfo.tabId

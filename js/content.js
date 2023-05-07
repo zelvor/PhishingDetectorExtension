@@ -1,7 +1,7 @@
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   var url = tabs[0].url
   document.getElementById('domain-name').innerHTML = new URL(url).hostname
-  chrome.storage.sync.get(['results'], function (result) {
+  chrome.storage.local.get(['results'], function (result) {
     console.log(result)
     const matchingURL = result.results.find((element) => element.url === url)
     if (matchingURL) {
