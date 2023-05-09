@@ -20,7 +20,6 @@
       "manifest_version": 3,
       "permissions": [
         "tabs",
-        "contextMenus",
         "storage",
         "activeTab",
         "scripting"
