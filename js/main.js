@@ -19,15 +19,27 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
   findURLInStorage(url)
 })
 
-function findURLInStorage(url) {
-  chrome.storage.local.get(['results'], function (result) {
+// function findURLInStorage(url) {
+//   chrome.storage.local.get(['results'], function (result) {
+//     const matchingURL = result.results.find((element) => element.url === url)
+//     if (matchingURL) {
+//       if (matchingURL.response === 'Phish') {
+//         showPopup()
+//       }
+//     }
+//   })
+// }
+
+async function findURLInStorage(url) {
+  try {
+    const result = await chrome.storage.local.get(['results'])
     const matchingURL = result.results.find((element) => element.url === url)
-    if (matchingURL) {
-      if (matchingURL.response === 'Phish') {
-        showPopup()
-      }
+    if (matchingURL && matchingURL.response === 'Phish') {
+      showPopup()
     }
-  })
+  } catch (error) {
+    console.error('Error retrieving storage:', error)
+  }
 }
 
 // function removePopup() {
@@ -40,7 +52,7 @@ function showPopup() {
   if (document.getElementById('my-popup-phishing-detector')) {
     return
   }
-  
+
   var popup = document.createElement('div')
   popup.id = 'my-popup-phishing-detector'
 

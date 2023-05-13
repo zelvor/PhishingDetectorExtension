@@ -1,10 +1,23 @@
 const button = document.getElementById('button-addon2')
 button.addEventListener('click', function () {
   var urlInput = document.getElementById('url_input').value
+  resetUI()
   console.log(urlInput)
   postAIResponse(urlInput)
   // chrome.storage.sync.set({ url: '' }, function () {})
 })
+
+function resetUI() {
+  const circle = document.getElementById('res-circle-2')
+  circle.style.backgroundColor = '#fff'
+  circle.classList.add('spinner-border')
+  document.getElementById('res-circle-2').style.backgroundColor = '#fff'
+  document.getElementById('res-circle-2').style.width = '120px'
+  document.getElementById('res-circle-2').style.height = '120px'
+  document.getElementById('site_score_2').innerHTML = ''
+  document.getElementById('site_msg_2').innerHTML = ''
+}
+
 
 function postAIResponse(urlInput) {
   fetch(
@@ -19,6 +32,8 @@ function postAIResponse(urlInput) {
         circle2.classList.remove('spinner-border')
         document.getElementById('res-circle-2').style.backgroundColor =
           '#5cb85c'
+        document.getElementById('res-circle-2').style.width = '150px'
+        document.getElementById('res-circle-2').style.height = '150px'
         document.getElementById('site_score_2').innerHTML = 'Legit'
         document.getElementById('site_msg_2').innerHTML =
           'Trang web này an toàn'
@@ -29,6 +44,8 @@ function postAIResponse(urlInput) {
         circle2.classList.remove('spinner-border')
         document.getElementById('res-circle-2').style.backgroundColor =
           '#bc5858'
+        document.getElementById('res-circle-2').style.width = '150px'
+        document.getElementById('res-circle-2').style.height = '150px'
         document.getElementById('site_score_2').innerHTML = 'Phish'
         document.getElementById('site_msg_2').innerHTML =
           'Trang web này không an toàn'
@@ -81,14 +98,19 @@ function ReportHandler(urlInput) {
     redirect: 'follow',
   }
 
-  fetch('https://phishingdetector.azurewebsites.net/postreporturl?url=' + urlInput, requestOptions)
+  fetch(
+    'https://phishingdetector.azurewebsites.net/postreporturl?url=' + urlInput,
+    requestOptions,
+  )
     .then((response) => response.text())
-    .then((result) => (document.getElementById('report_msg').innerHTML = "Báo cáo thành công!"))
+    .then(
+      (result) =>
+        (document.getElementById('report_msg').innerHTML =
+          'Báo cáo thành công!'),
+    )
     .catch((error) => console.log('error', error))
 
   setTimeout(function () {
     document.getElementById('report_msg').innerHTML = ''
   }, 3000)
 }
-
-

@@ -29,6 +29,13 @@ html {
     padding-left: 50px;
     padding-right: 10px;
   }
+
+  .spinner-border {
+    border: 4px solid transparent;
+    border-top-color: blue;
+    border-bottom-color: blue;
+    border-radius: 50%;
+  }
   
   h1 {
     font-size: 24px;
@@ -42,9 +49,9 @@ html {
   }
   
   .rounded-circle {
-    background: #58bc8a;
-    width: 150px;
-    height: 150px;
+    background: #ffffff;
+    width: 120px;
+    height: 120px;
     padding: 20px;
     clear: both;
     align-content: center;

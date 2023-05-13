@@ -1,7 +1,7 @@
-let results = []
 const MAX_URLS = 30
 const MAX_DAYS = 5
 var activeTab = 0
+results = []
 
 function postAIResponse(urlInput, callback) {
   fetch(
