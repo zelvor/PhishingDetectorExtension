@@ -1,19 +1,3 @@
-// chrome.tabs.onActivated.addListener(function (activeInfo) {
-//   activeTab = activeInfo.tabId
-//   url = activeInfo.url
-//   console.log(url)
-//   removePopup()
-//   findURLInStorage(url)
-// })
-
-// chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-//   if (changeInfo.url && tabId === activeTab) {
-//     url = changeInfo.url
-//     removePopup()
-//     findURLInStorage(url)
-//   }
-// })
-
 // Phát hiện sự kiện thay đổi tab
 document.addEventListener('visibilitychange', function () {
   if (document.visibilityState === 'visible') {
@@ -40,26 +24,23 @@ function findURLInStorage(url) {
     const matchingURL = result.results.find((element) => element.url === url)
     if (matchingURL) {
       if (matchingURL.response === 'Phish') {
-        console.log('Phishing detected')
-        removePopup()
         showPopup()
       }
     }
   })
 }
 
-function removePopup() {
-  // check if popup exists
-  if (document.getElementById('my-popup-phishing-detector')) {
-    document.getElementById('my-popup-phishing-detector').remove()
-  }
-
-  if (document.getElementById('my-overlay-phishing-detector')) {
-    document.getElementById('my-overlay-phishing-detector').remove()
-  }
-}
+// function removePopup() {
+//   document.getElementById('my-popup-phishing-detector')?.remove()
+//   document.getElementById('my-overlay-phishing-detector')?.remove()
+// }
 
 function showPopup() {
+  // if popup is already shown, do nothing
+  if (document.getElementById('my-popup-phishing-detector')) {
+    return
+  }
+  
   var popup = document.createElement('div')
   popup.id = 'my-popup-phishing-detector'
 

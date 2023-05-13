@@ -1,5 +1,5 @@
 {
-    "name": "Phishing Detector",
+    "name": "Website Phishing Detector",
     "version": "1.0",
     "description": "Phát hiện URL giả mạo",
     "action":{
@@ -20,9 +20,7 @@
       "manifest_version": 3,
       "permissions": [
         "tabs",
-        "storage",
-        "activeTab",
-        "scripting"
+        "storage"
       ],
       "background": {
         "service_worker": "js/background.js"
