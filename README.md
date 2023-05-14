@@ -4,7 +4,7 @@ Extension là một phần mở rộng cho trình duyệt web, cung cấp các t
 
 ## Yêu cầu
 
-- Trình duyệt web **Google Chrome** hoặc **Microsoft Edge**.
+- Trình duyệt web **Google Chrome** hoặc **Microsoft Edge** (Hiện tại chỉ hỗ trợ 2 trình duyệt này).
 
 ## Cài đặt
 
