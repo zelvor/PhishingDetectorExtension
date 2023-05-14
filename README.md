@@ -1,6 +1,6 @@
 # Hướng dẫn cài đặt Extension
 
-Extension là một phần mở rộng cho trình duyệt web, cung cấp các tính năng bổ sung và tăng cường trải nghiệm của người dùng. Đây là hướng dẫn cài đặt Extension từ file extension trên GitHub.
+Extension là một phần mở rộng cho trình duyệt web, cung cấp các tính năng bổ sung và tăng cường trải nghiệm của người dùng. Đây là hướng dẫn cài đặt Extension phát hiện giả mạo.
 
 ## Yêu cầu
 
