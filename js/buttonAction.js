@@ -1,8 +1,72 @@
+let db;
+
+function openDB() {
+  const request = indexedDB.open("myDatabase", 1);
+
+  request.onerror = function(event) {
+    console.log("Error opening indexedDB");
+  };
+
+  request.onsuccess = function(event) {
+    db = event.target.result;
+    console.log("IndexedDB connection successful");
+  };
+
+  request.onupgradeneeded = function(event) {
+    db = event.target.result;
+
+    // Tạo object store (bảng) để lưu trữ dữ liệu
+    if (!db.objectStoreNames.contains("reportedURLs")) {
+      const objectStore = db.createObjectStore("reportedURLs", { keyPath: "id", autoIncrement: true });
+
+      // Tạo các chỉ mục (indexes) nếu cần thiết
+      objectStore.createIndex("urlIndex", "url", { unique: true });
+    }
+  };
+}
+
+openDB();
+
+function addToReportedURLs(url) {
+  const transaction = db.transaction(["reportedURLs"], "readwrite");
+  const objectStore = transaction.objectStore("reportedURLs");
+
+  const request = objectStore.add({ url: url });
+
+  request.onsuccess = function(event) {
+    console.log("URL added to reportedURLs in IndexedDB");
+  };
+
+  request.onerror = function(event) {
+    console.log("Error adding URL to reportedURLs in IndexedDB");
+  };
+}
+
+
+
+
+
 const button = document.getElementById('button-addon2')
 button.addEventListener('click', function () {
   var urlInput = document.getElementById('url_input').value
+  if (urlInput == '') {
+    alert('Please enter the URL')
+    return
+  }
+  var regex = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ) // fragment locator
   resetUI()
-  console.log(urlInput)
+  if (!regex.test(urlInput)) {
+    document.getElementById('res-circle-2').style.backgroundColor = '#808080'
+    document.getElementById('site_msg_2').innerHTML = 'URL không hợp lệ'
+  }
   postAIResponse(urlInput)
   // chrome.storage.sync.set({ url: '' }, function () {})
 })
@@ -17,7 +81,6 @@ function resetUI() {
   document.getElementById('site_score_2').innerHTML = ''
   document.getElementById('site_msg_2').innerHTML = ''
 }
-
 
 function postAIResponse(urlInput) {
   fetch(
@@ -109,6 +172,14 @@ function ReportHandler(urlInput) {
           'Báo cáo thành công!'),
     )
     .catch((error) => console.log('error', error))
+
+  // Lưu URL vào bộ nhớ cục bộ của extension
+  addToReportedURLs(urlInput);
+
+  // console.log data
+  chrome.storage.local.get(['reportedURLs'], function (result) {
+    console.log(result)
+  })
 
   setTimeout(function () {
     document.getElementById('report_msg').innerHTML = ''

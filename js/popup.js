@@ -1,6 +1,4 @@
 chrome.storage.sync.get('url', function (result) {
-  // send selected text to input field has id = "url_input" in popup.html
-  // check regex before sending to input field
   if (result.url.match(/^(http|https):\/\/[^ "]+$/)) {
     const page1 = document.getElementById('page-1')
     const page2 = document.getElementById('page-2')

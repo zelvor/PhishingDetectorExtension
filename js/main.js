@@ -6,29 +6,16 @@ document.addEventListener('visibilitychange', function () {
   }
 })
 
-// kiểm tra lại url sau khi reload xong
 window.onload = function () {
   const url = window.location.href
   findURLInStorage(url)
 }
 
-// khi storage thay đổi
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   // find the url in the storage
   const url = window.location.href
   findURLInStorage(url)
 })
-
-// function findURLInStorage(url) {
-//   chrome.storage.local.get(['results'], function (result) {
-//     const matchingURL = result.results.find((element) => element.url === url)
-//     if (matchingURL) {
-//       if (matchingURL.response === 'Phish') {
-//         showPopup()
-//       }
-//     }
-//   })
-// }
 
 async function findURLInStorage(url) {
   try {
@@ -42,21 +29,13 @@ async function findURLInStorage(url) {
   }
 }
 
-// function removePopup() {
-//   document.getElementById('my-popup-phishing-detector')?.remove()
-//   document.getElementById('my-overlay-phishing-detector')?.remove()
-// }
-
 function showPopup() {
-  // if popup is already shown, do nothing
   if (document.getElementById('my-popup-phishing-detector')) {
     return
   }
 
   var popup = document.createElement('div')
   popup.id = 'my-popup-phishing-detector'
-
-  // Set the styles for the popup
   popup.style.position = 'fixed'
   popup.style.top = '50%'
   popup.style.left = '50%'
@@ -73,7 +52,6 @@ function showPopup() {
   popup.style.padding = '20px'
   popup.style.borderRadius = '20px'
 
-  // Set the content of the popup
   popup.innerHTML =
     '<p style="color: #000 !important; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Trang web này không an toàn. Bạn có muốn truy cập tiếp không?</p>' +
     '<div style="display: flex; justify-content: space-between">' +
@@ -81,17 +59,14 @@ function showPopup() {
     '<button id="proceed-btn" style="padding: 10px 20px; background-color: #f00; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Tiếp tục truy cập</button>' +
     '</div>'
 
-  // Add event listeners to the buttons
   var proceedBtn = popup.querySelector('#proceed-btn')
   proceedBtn.addEventListener('click', function () {
-    // Handle click event for "proceed" button
     popup.remove()
     overlay.remove()
   })
 
   var backBtn = popup.querySelector('#back-btn')
   backBtn.addEventListener('click', function () {
-    // Handle click event for "back" button
     popup.remove()
     overlay.remove()
     if (history.length > 1) {
