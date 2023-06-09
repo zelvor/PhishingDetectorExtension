@@ -53,7 +53,7 @@ function showPopup() {
   popup.style.borderRadius = '20px'
 
   popup.innerHTML =
-    '<p style="color: #000 !important; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Trang web này không an toàn. Bạn có muốn truy cập tiếp không?</p>' +
+    '<p style="color: #000 !important; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Trang web này có thể không an toàn. Bạn có muốn truy cập tiếp không?</p>' +
     '<div style="display: flex; justify-content: space-between">' +
     '<button id="back-btn" style="padding: 10px 20px; background-color: #ccc; border: none; border-radius: 5px; cursor: pointer;">Quay lại trang trước</button>' +
     '<button id="proceed-btn" style="padding: 10px 20px; background-color: #f00; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Tiếp tục truy cập</button>' +

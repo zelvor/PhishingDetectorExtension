@@ -64,10 +64,6 @@ function updateBadge(url) {
       const result = { url: url, response: response };
       results.push(result);
 
-      if (results.length > MAX_URLS) {
-        results.shift(); // remove the oldest URL
-      }
-
       chrome.storage.local.set({ results: results }, function () {});
     } else {
       if (url.match(/^(http|https):\/\/[^ "]+$/)) {
@@ -97,9 +93,6 @@ function updateBadge(url) {
                 const result = { url: url, response: response };
                 results.push(result);
 
-                if (results.length > MAX_URLS) {
-                  results.shift(); // remove the oldest URL
-                }
                 chrome.storage.local.set({ results: results }, function () {});
               }
             });

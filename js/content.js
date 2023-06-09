@@ -44,7 +44,7 @@ function showLegit() {
   document.getElementById('res-circle').style.width = '150px'
   document.getElementById('res-circle').style.height = '150px'
   document.getElementById('site_score').innerHTML = 'Legit'
-  document.getElementById('site_msg').innerHTML = 'Trang web này an toàn'
+  document.getElementById('site_msg').innerHTML = 'Trang web này có thể an toàn'
 }
 
 function showPhish() {
@@ -54,5 +54,5 @@ function showPhish() {
   document.getElementById('res-circle').style.width = '150px'
   document.getElementById('res-circle').style.height = '150px'
   document.getElementById('site_score').innerHTML = 'Phish'
-  document.getElementById('site_msg').innerHTML = 'Trang web này không an toàn'
+  document.getElementById('site_msg').innerHTML = 'Trang web này có thể không an toàn'
 }

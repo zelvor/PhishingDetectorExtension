@@ -99,7 +99,7 @@ function postAIResponse(urlInput) {
         document.getElementById('res-circle-2').style.height = '150px'
         document.getElementById('site_score_2').innerHTML = 'Legit'
         document.getElementById('site_msg_2').innerHTML =
-          'Trang web này an toàn'
+          'Trang web này có thể an toàn'
       }
 
       function showPhish() {
@@ -111,7 +111,7 @@ function postAIResponse(urlInput) {
         document.getElementById('res-circle-2').style.height = '150px'
         document.getElementById('site_score_2').innerHTML = 'Phish'
         document.getElementById('site_msg_2').innerHTML =
-          'Trang web này không an toàn'
+          'Trang web này có thể không an toàn'
       }
 
       console.log(data)
